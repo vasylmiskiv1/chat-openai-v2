@@ -7,7 +7,7 @@ export const postMessage = (
   setMessage
 ) => {
   setLoader(true);
-  fetch(`http://192.168.0.103:5000/openai-api`, {
+  fetch(`http://vmiskivchat-openai-v2.onrender.com/api`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -9,6 +9,12 @@ import path from "path";
 const app = express();
 const port = 5000;
 
+const corsOptions = {
+  origin: "*",
+};
+
+app.use(cors(corsOptions));
+
 const aiTemplates = [
   {
     aiTemplate: "Senior Software Engineer",
@@ -19,22 +25,21 @@ const aiTemplates = [
 
 const configuration = new Configuration({
   organization: "org-11zyW7yuLZePbMkz8pTNF9hx",
-  apiKey: "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",
+  apiKey: "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",
 });
 const openai = new OpenAIApi(configuration);
 
 app.use(bodyParser.json());
-app.use(cors());
 
 const __rootdir = path.resolve();
 
 app.use(express.static(path.join(__rootdir, "/client/build")));
 
-app.get('*', function(req, res) {
-  res.sendFile(path.join(__rootdir, 'client', 'build', 'index.html'));
+app.get("/", function (req, res) {
+  res.sendFile(path.join(__rootdir, "client", "build", "index.html"));
 });
 
-app.post("/openai-api", async (req, res) => {
+app.post("/api", async (req, res) => {
   const { message, language } = req.body;
   const response = await openai.createCompletion({
     model: "text-davinci-003",
